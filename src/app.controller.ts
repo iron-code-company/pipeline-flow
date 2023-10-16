@@ -8,6 +8,7 @@ export class AppController {
   // Get represents getting something
   @Get()
   getHello(): string {
+    // testing
     return this.appService.getHello();
   }
 }
