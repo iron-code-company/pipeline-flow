@@ -5,24 +5,41 @@ on:
 
 jobs:
   build:
-    runs-on: [self-hosted, linux, ARM64]
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v3
-      - name: Login to docker hub
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build docker image
-        run: docker build -t jwozniak/api-dev1:v1 .
-      - name: Publish image to docker hub
-        run: docker push ijwozniak/api-dev1:v1:latest
+      - name: build
 
-  deploy:
-    needs: build
-    runs-on: [aws-ec2]
+  publish:
+    needs: [build]
+    runs-on: ubuntu-latest
+    environment: production
     steps:
-      - name: Pull image from docker hub
-        run: docker pull jwozniak/api-dev1:latest
-      - name: Delete old container
-        run: docker rm -f nodejs-app-container
-      - name: Run docker container
-        run: docker run -d -p 3000:3000 --name api-dev1 jwozniak/api-dev1:v1
+      - name: publish
+#on:
+#  push:
+#    branches:
+#      - main
+#
+#jobs:
+#  build:
+#    runs-on: [self-hosted, linux, ARM64]
+#    steps:
+#      - name: Checkout source
+#        uses: actions/checkout@v3
+#      - name: Login to docker hub
+#        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+#      - name: Build docker image
+#        run: docker build -t jwozniak/api-dev1:v1 .
+#      - name: Publish image to docker hub
+#        run: docker push jwozniak/api-dev1:v1:latest
+#
+#  deploy:
+#    needs: build
+#    runs-on: [aws-ec2]
+#    steps:
+#      - name: Pull image from docker hub
+#        run: docker pull jwozniak/api-dev1:latest
+#      - name: Delete old container
+#        run: docker rm -f nodejs-app-container
+#      - name: Run docker container
+#        run: docker run -d -p 3000:3000 --name api-dev1 jwozniak/api-dev1:v1
