@@ -5,13 +5,13 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: build
 
   publish:
     needs: [build]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     environment: production
     steps:
       - name: publish
