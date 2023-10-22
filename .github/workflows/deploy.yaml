@@ -34,7 +34,7 @@ jobs:
           host: ${{ secrets.HOST_DNS }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-                 - name: Pull image from docker hub
+            - name: Pull image from docker hub
         run: docker pull jwozniak/api-dev1:latest
       - name: Delete old container
         run: docker rm -f nodejs-app-container
