@@ -14,17 +14,18 @@ jobs:
           REPOSITORY: nestjs-api
           IMAGE_TAG: jwozniak/api-dev1
         run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -t $IMAGE_TAG .
           docker tag $IMAGE_TAG:latest $IMAGE_TAG:release
           docker push $IMAGE_TAG:release
       #        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build docker image
-        run: docker build -t $IMAGE_TAG .
-      - name: Publish image to docker hub
-        run: docker push jwozniak/api-dev1:v1:latest
+#      - name: Build docker image
+#        run: docker build -t $IMAGE_TAG .
+#      - name: Publish image to docker hub
+#        run: docker push jwozniak/api-dev1:v1:latest
 
   deploy:
-    name: Deploy the new Docker image to ECS
+    name: Deploy the new Docker image to EC2
     needs: build
     runs-on: [ aws-ec2 ]
     steps:
