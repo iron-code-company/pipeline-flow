@@ -36,7 +36,9 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
       - name: Pull image from docker hub
-        run: docker pull $IMAGE_TAG:release
+        run:  |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker pull $IMAGE_TAG:release
       - name: Delete old container
         run: docker rm -f nodejs-app-container
       - name: Run docker container
