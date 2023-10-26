@@ -36,11 +36,11 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
       - name: Pull image from docker hub
-        run: docker pull jwozniak/api-dev1:latest
+        run: docker pull $IMAGE_TAG:release
       - name: Delete old container
         run: docker rm -f nodejs-app-container
       - name: Run docker container
-        run: docker run -d -p 3000:3000 --name api-dev1 jwozniak/api-dev1:v1
+        run: docker run -d -p 3000:3000 --name api-dev1 $IMAGE_TAG:release
 
 #name: Deploy to production
 #
