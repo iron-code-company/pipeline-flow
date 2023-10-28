@@ -36,6 +36,9 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
       - name: Pull image from docker hub
+        env:
+          REPOSITORY: nestjs-api
+          IMAGE_TAG: jwozniak/api-dev1
         run:  |
           docker pull $IMAGE_TAG:release
       - name: Delete old container
