@@ -35,14 +35,19 @@ jobs:
           host: ${{ secrets.HOST_DNS }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-      - name: Delete old container
-        run: docker rm -f api-dev1
-      - name: Pull image from docker hub
-        env:
-          REPOSITORY: nestjs-api
-          IMAGE_TAG: jwozniak/api-dev1
-        run: |
-               docker pull jwozniak/api-dev1:release
-      - name: Run docker container
-        #        run: docker run -d -p 3000:3000 --name api-dev1 $IMAGE_TAG:release
-        run: docker run -d -p 80:3000 --name api-dev1 jwozniak/api-dev1:release
+          script: |-
+            sudo docker stop api-dev1 || true
+            sudo rm -f api-dev1 || true
+            sudo docker pull jwozniak/api-dev1:release
+            sudo docker run -d -p 80:3000 --name api-dev1 jwozniak/api-dev1:release
+#      - name: Delete old container
+#        run: docker rm -f api-dev1
+#      - name: Pull image from docker hub
+#        env:
+#          REPOSITORY: nestjs-api
+#          IMAGE_TAG: jwozniak/api-dev1
+#        run: |
+#               docker pull jwozniak/api-dev1:release
+#      - name: Run docker container
+#        #        run: docker run -d -p 3000:3000 --name api-dev1 $IMAGE_TAG:release
+#        run: docker run -d -p 80:3000 --name api-dev1 jwozniak/api-dev1:release
