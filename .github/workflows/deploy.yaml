@@ -42,7 +42,6 @@ jobs:
           REPOSITORY: nestjs-api
           IMAGE_TAG: jwozniak/api-dev1
         run: |
-          #          docker pull $IMAGE_TAG:release
                docker pull jwozniak/api-dev1:release
       - name: Run docker container
         #        run: docker run -d -p 3000:3000 --name api-dev1 $IMAGE_TAG:release
